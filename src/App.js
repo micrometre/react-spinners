@@ -1,25 +1,29 @@
-import logo from './logo.svg';
+import { useState } from 'react'
+import { ReactComponent as Loader } from './loader.svg';
 import './App.css';
 
-function App() {
+export function Button({ onSubmit, text, loading, disabled }) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <button className="bg-red-700 min-h-80 min-w-80 text-7xl text-white " onClick={onSubmit} disabled={disabled}>
+      {!loading ? text : <Loader className="spinner" />}
+    </button>
   );
 }
 
-export default App;
+
+export default function Home() {
+  const [showLoader, setShowLoader] = useState(false)
+  function onSubmit() {
+    setShowLoader(true);
+    setTimeout(() => {
+      return setShowLoader(false);
+    }, 4000);
+  }
+  return (
+    <div className="m-40">
+      <Button text="Submit" onSubmit={onSubmit} loading={showLoader} disabled={showLoader} ></Button>
+      <h1 className="text-3xl font-bold underline">
+      </h1>
+    </div>
+  );
+}
